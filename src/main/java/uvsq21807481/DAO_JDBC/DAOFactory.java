@@ -6,4 +6,8 @@ public class DAOFactory {
     public static DAOJdbc<Circle> getDAOCircle() {
         return new DAOCircle();
     }
+
+    public static DAOJdbc<Rectangle> getDAORectangle() {
+        return new DAORectangle();
+    }
 }
