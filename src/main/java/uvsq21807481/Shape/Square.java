@@ -4,8 +4,8 @@ public class Square extends Shape{
 
     public double side;
 
-    public Square(String name, double x, double y, double side) {
-        super(name, x, y);
+    public Square(String name, Point p, double side) {
+        super(name, p);
         this.side = side;
     }
 
@@ -45,7 +45,7 @@ public class Square extends Shape{
                             + downRightX
                             + ","
                             + downRightY
-                            + ")"
+                            + "))"
         );
     }
 }

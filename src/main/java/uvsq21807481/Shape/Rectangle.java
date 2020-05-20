@@ -5,8 +5,8 @@ public class Rectangle extends Shape{
     public double length;
     public double width;
 
-    public Rectangle(String name, double x, double y, double length, double width) {
-        super(name, x, y);
+    public Rectangle(String name, Point p, double length, double width) {
+        super(name, p);
         this.length = length;
         this.width = width;
     }
@@ -45,7 +45,7 @@ public class Rectangle extends Shape{
                             + downRightX
                             + ","
                             + downRightY
-                            + ")"
+                            + "))"
         );
     }
 }

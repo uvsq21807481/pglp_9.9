@@ -5,9 +5,8 @@ public abstract class Shape {
     private String name;
     private Point mainPoint;
 
-    public Shape(String name, double x, double y) {
+    public Shape(String name, Point p) {
         this.name = name;
-        Point p = new Point(x, y);
         this.mainPoint = p;
     }
 
