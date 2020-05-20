@@ -8,9 +8,9 @@ public abstract class DAOJdbc<T> {
 
     Connection register = null;
 
-    public abstract T create(T obj);
+    public abstract void create(T obj);
     public abstract T read(String name);
-    public abstract T update(T obj, String name);
+    public abstract void update(T obj, String name);
     public abstract void delete(String name);
 
     public void open() {

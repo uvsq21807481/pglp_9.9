@@ -14,4 +14,8 @@ public class DAOFactory {
     public static DAOJdbc<Square> getDAOSquare() {
         return new DAOSquare();
     }
+
+    public static DAOJdbc<Triangle> getDAOTriangle() {
+        return new DAOTriangle();
+    }
 }

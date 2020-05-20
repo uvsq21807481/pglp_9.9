@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DAORectangle extends DAOJdbc<Rectangle> {
 
     @Override
-    public Rectangle create(Rectangle r) {
+    public void create(Rectangle r) {
         this.open();
         try {
             PreparedStatement newRectangle = this.register.prepareStatement(
@@ -25,7 +25,6 @@ public class DAORectangle extends DAOJdbc<Rectangle> {
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class DAORectangle extends DAOJdbc<Rectangle> {
     }
 
     @Override
-    public Rectangle update(Rectangle r, String s) {
+    public void update(Rectangle r, String s) {
         this.open();
         try {
             PreparedStatement updateRectangle = this.register.prepareStatement(
@@ -66,7 +65,6 @@ public class DAORectangle extends DAOJdbc<Rectangle> {
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override

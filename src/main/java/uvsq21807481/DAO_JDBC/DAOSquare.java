@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DAOSquare extends DAOJdbc<Square>{
 
     @Override
-    public Square create(Square s) {
+    public void create(Square s) {
         this.open();
         try {
             PreparedStatement newSquare = this.register.prepareStatement(
@@ -24,7 +24,6 @@ public class DAOSquare extends DAOJdbc<Square>{
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class DAOSquare extends DAOJdbc<Square>{
     }
 
     @Override
-    public Square update(Square square, String s) {
+    public void update(Square square, String s) {
         this.open();
         try {
             PreparedStatement updateSquare = this.register.prepareStatement(
@@ -64,7 +63,6 @@ public class DAOSquare extends DAOJdbc<Square>{
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override

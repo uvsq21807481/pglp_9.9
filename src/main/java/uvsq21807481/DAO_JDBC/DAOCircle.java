@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DAOCircle extends DAOJdbc<Circle> {
 
     @Override
-    public Circle create(Circle c) {
+    public void create(Circle c) {
         this.open();
         try {
             PreparedStatement newCircle = this.register.prepareStatement(
@@ -24,7 +24,6 @@ public class DAOCircle extends DAOJdbc<Circle> {
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class DAOCircle extends DAOJdbc<Circle> {
     }
 
     @Override
-    public Circle update(Circle c, String s) {
+    public void update(Circle c, String s) {
         this.open();
         try {
             PreparedStatement updateCircle = this.register.prepareStatement(
@@ -64,7 +63,6 @@ public class DAOCircle extends DAOJdbc<Circle> {
             e.printStackTrace();
         }
         this.close();
-        return null;
     }
 
     @Override
