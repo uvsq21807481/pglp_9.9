@@ -20,6 +20,6 @@ public class CommandSquare extends Screen{
 
     @Override
     public void execute() {
-        super.screen.addShape(new Square(name, center, side);
+        super.screen.addShape(new Square(name, center, side));
     }
 }
