@@ -18,4 +18,10 @@ public class DAOFactory {
     public static DAOJdbc<Triangle> getDAOTriangle() {
         return new DAOTriangle();
     }
+
+    public static DAOJdbc<Group> getDAOGroup() {
+        return new DAOGroup();
+    }
+
+    public static DAOJdbc
 }

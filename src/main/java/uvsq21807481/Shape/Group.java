@@ -26,4 +26,8 @@ public class Group extends Shape{
             s.show();
         }
     }
+
+    public ArrayList<Shape> getShapes() {
+        return shapes;
+    }
 }
