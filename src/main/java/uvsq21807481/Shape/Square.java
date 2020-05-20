@@ -1,14 +1,12 @@
 package uvsq21807481.Shape;
 
-public class Rectangle extends Shape{
+public class Square extends Shape{
 
-    public double length;
-    public double width;
+    public double side;
 
-    public Rectangle(String name, double x, double y, double length, double width) {
+    public Square(String name, double x, double y, double side) {
         super(name, x, y);
-        this.length = length;
-        this.width = width;
+        this.side = side;
     }
 
     @Override
@@ -18,18 +16,20 @@ public class Rectangle extends Shape{
 
     @Override
     public void show() {
-        double upLeftX = this.getMainPoint().getX() - (width / 2);
-        double upLeftY = this.getMainPoint().getY() + (length / 2);
 
-        double upRightX = this.getMainPoint().getX() + (width / 2);
-        double upRightY = this.getMainPoint().getY() + (length / 2);
+        double upLeftX = this.getMainPoint().getX() - (side / 2);
+        double upLeftY = this.getMainPoint().getY() + (side / 2);
 
-        double downLeftX = this.getMainPoint().getX() - (width / 2);
-        double downLeftY = this.getMainPoint().getY() - (length / 2);
+        double upRightX = this.getMainPoint().getX() + (side / 2);
+        double upRightY = this.getMainPoint().getY() + (side / 2);
 
-        double downRightX = this.getMainPoint().getX() + (width / 2);
-        double downRightY = this.getMainPoint().getY() - (length / 2);
-        System.out.println("Rectangle(Up left = ("
+        double downLeftX = this.getMainPoint().getX() - (side / 2);
+        double downLeftY = this.getMainPoint().getY() - (side / 2);
+
+        double downRightX = this.getMainPoint().getX() + (side / 2);
+        double downRightY = this.getMainPoint().getY() - (side / 2);
+
+        System.out.println("Square(Up left = ("
                             + upLeftX
                             + ","
                             + upLeftY
