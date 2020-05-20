@@ -22,6 +22,4 @@ public class DAOFactory {
     public static DAOJdbc<Group> getDAOGroup() {
         return new DAOGroup();
     }
-
-    public static DAOJdbc
 }
