@@ -10,4 +10,8 @@ public class DAOFactory {
     public static DAOJdbc<Rectangle> getDAORectangle() {
         return new DAORectangle();
     }
+
+    public static DAOJdbc<Square> getDAOSquare() {
+        return new DAOSquare();
+    }
 }
