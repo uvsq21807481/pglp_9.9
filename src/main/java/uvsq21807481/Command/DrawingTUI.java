@@ -62,6 +62,14 @@ public class DrawingTUI {
             double coorY3 = Double.parseDouble(newTriangle[6]);
             command = new CommandTriangle(this.g, name, coorX1, coorY1, coorX2, coorY2, coorX3, coorY3);
         }
+        else if(user.contains("group")) {
+            String[] decomp = user.split("\\(");
+            String name = decomp[1].replace("\\)", "");
+            command = new CommandGroup(this.g, name);
+        }
+        else if(user.contains("link")) {
+
+        }
         else if(user.contains("move")) {
             String[] movement = user.split(",");
             String[] start = movement[0].split("\\(");
@@ -91,11 +99,70 @@ public class DrawingTUI {
                 }
             }
         }
-        /*
         else if(user.contains("delete")) {
+            String[] decomp = user.split("\\(");
+            String[] elements = decomp[1].split(",");
+            String group = elements[0];
+            String target = elements[1].replace("\\)", "");
+            if(group == "all") {
+                command = new CommandDelete(this.g, target);
+            }
+            else {
+                int found = 0;
+                int i = 0;
+                Shape s = null;
+                while(found == 0 && i < this.g.getShapes().size()) {
+                    s = g.getShapes().get(i);
+                    if(s.getName() == target && s instanceof Group) {
+                        found = 1;
+                    }
+                    i++;
+                }
+                if(found == 0) {
+                    System.out.println("Group does not exist");
+                }
+                else {
+                    command = new CommandDelete((Group)s, target);
+                }
+            }
+        }
+        else if(user.contains("save")) {
+            command = new CommandSave(this.g);
+        }
+        else if(user.contains("load")) {
 
         }
-        */
+        else if(user.contains("show")) {
+            String[] decomp = user.split("\\(");
+            String target = decomp[1].replace("\\)", "");
+            if(target == "all") {
+                command = new CommandShow(this.g);
+            }
+            else {
+                int found = 0;
+                int i = 0;
+                Shape s = null;
+                while(found == 0 && i < this.g.getShapes().size()) {
+                    s = g.getShapes().get(i);
+                    if(s.getName() == target) {
+                        found = 1;
+                    }
+                    i++;
+                }
+                if(found == 0) {
+                    System.out.println("Shape or Group does not exist");
+                }
+                else {
+                    command = new CommandShow(s);
+                }
+            }
+        }
+        else if(user.contains("quit")) {
+            command = new CommandQuit();
+        }
+        else {
+            System.out.println("Unknown command");
+        }
         return command;
     }
 }
