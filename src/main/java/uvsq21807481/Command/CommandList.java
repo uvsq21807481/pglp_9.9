@@ -19,6 +19,9 @@ public class CommandList implements Command{
         System.out.println("Create a group : group(nameNewGroup)");
         System.out.println("Add a shape to a Group : link(groupName, shapeName");
         System.out.println("Show a shape / a group of shapes: show(name)");
-        System.out.println("Delete a shape : delete(group name");
+        System.out.println("Move a shape : move(shapeName, x, y)");
+        System.out.println("Delete a shape : delete(groupName, shapeName)");
+
+        System.out.println("Quit : quit");
     }
 }

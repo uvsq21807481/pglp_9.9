@@ -14,154 +14,177 @@ public class DrawingTUI {
         this.scan = new Scanner(System.in);
     }
 
+    public void setGroup(Group g) {
+        this.g = g;
+    }
+
     public Command nextCommand() {
         Command command = null;
         String user = this.scan.nextLine();
         user = user.replace(" ", "");
-        if(user.contains("circle")) {
-            String[] newCircle = user.split(",");
-            String[] start = newCircle[0].split("\\(");
-            String name = start[1];
-            double coorX = Double.parseDouble(newCircle[1]);
-            double coorY = Double.parseDouble(newCircle[2]);
-            newCircle[3].replace("\\)","");
-            double radius = Double.parseDouble(newCircle[3]);
-            command = new CommandCircle(this.g, name, coorX, coorY, radius);
+        String[] input = user.split("\\(");
+        String commandChoice = input[0];
+        String[] parameters = input[1].split(",");
+        if(commandChoice == "circle") {
+            String name = parameters[0];
+            double centerX = Double.parseDouble(parameters[1]);
+            double centerY = Double.parseDouble(parameters[2]);
+            double radius = Double.parseDouble(parameters[3].replace("\\)", ""));
+            command = new CommandCircle(this.g, name, centerX, centerY, radius);
         }
-        else if(user.contains("rectangle")) {
-            String[] newRectangle = user.split(",");
-            String[] start = newRectangle[0].split("\\(");
-            String name = start[1];
-            double coorX = Double.parseDouble(newRectangle[1]);
-            double coorY = Double.parseDouble(newRectangle[2]);
-            double length = Double.parseDouble(newRectangle[3]);
-            newRectangle[4].replace("\\)","");
-            double width = Double.parseDouble(newRectangle[4]);
-            command = new CommandRectangle(this.g, name, coorX, coorY, length, width);
+        else if(commandChoice == "rectangle") {
+            String name = parameters[0];
+            double centerX = Double.parseDouble(parameters[1]);
+            double centerY = Double.parseDouble(parameters[2]);
+            double length = Double.parseDouble(parameters[3]);
+            double width = Double.parseDouble(parameters[4].replace("\\)", ""));
+            command = new CommandRectangle(this.g, name, centerX, centerY, length, width);
         }
-        else if(user.contains("square")) {
-            String[] newSquare = user.split(",");
-            String[] start = newSquare[0].split("\\(");
-            String name = start[1];
-            double coorX = Double.parseDouble(newSquare[1]);
-            double coorY = Double.parseDouble(newSquare[2]);
-            newSquare[3].replace("\\)","");
-            double side = Double.parseDouble(newSquare[3]);
-            command = new CommandSquare(this.g, name, coorX, coorY, side);
+        else if(commandChoice == "square") {
+            String name = parameters[0];
+            double centerX = Double.parseDouble(parameters[1]);
+            double centerY = Double.parseDouble(parameters[2]);
+            double side = Double.parseDouble(parameters[3].replace("\\)", ""));
+            command = new CommandSquare(this.g, name, centerX, centerY, side);
         }
-        else if(user.contains("triangle")) {
-            String[] newTriangle = user.split(",");
-            String[] start = newTriangle[0].split("\\(");
-            String name = start[1];
-            double coorX1 = Double.parseDouble(newTriangle[1]);
-            double coorY1 = Double.parseDouble(newTriangle[2]);
-            double coorX2 = Double.parseDouble(newTriangle[3]);
-            double coorY2 = Double.parseDouble(newTriangle[4]);
-            double coorX3 = Double.parseDouble(newTriangle[5]);
-            newTriangle[6].replace("\\)","");
-            double coorY3 = Double.parseDouble(newTriangle[6]);
-            command = new CommandTriangle(this.g, name, coorX1, coorY1, coorX2, coorY2, coorX3, coorY3);
+        else if(commandChoice == "triangle") {
+            String name = parameters[0];
+            double x1 = Double.parseDouble(parameters[1]);
+            double y1 = Double.parseDouble(parameters[2]);
+            double x2 = Double.parseDouble(parameters[3]);
+            double y2 = Double.parseDouble(parameters[4]);
+            double x3 = Double.parseDouble(parameters[5]);
+            double y3 = Double.parseDouble(parameters[6].replace("\\)", ""));
+            command = new CommandTriangle(this.g, name, x1, y1, x2, y2, x3, y3);
         }
-        else if(user.contains("group")) {
-            String[] decomp = user.split("\\(");
-            String name = decomp[1].replace("\\)", "");
+        else if(commandChoice == "group") {
+            String name = parameters[0].replace("\\)", "");
             command = new CommandGroup(this.g, name);
         }
-        else if(user.contains("link")) {
+        else if(commandChoice == "link") {
+            String container = parameters[0];
+            String element = parameters[1].replace("\\)", "");
 
-        }
-        else if(user.contains("move")) {
-            String[] movement = user.split(",");
-            String[] start = movement[0].split("\\(");
-            String target = start[1];
-            double moveX = Double.parseDouble(movement[1]);
-            movement[2].replace("\\)","");
-            double moveY = Double.parseDouble(movement[2]);
-            if(target == "all") {
-                command = new CommandMove(this.g, moveX, moveY);
+            int found = 0;
+            int i = 0;
+            Shape s = null;
+            while(found == 0 && i < this.g.getShapes().size()) {
+                s = this.g.getShapes().get(i);
+                if(s.getName() == element) {
+                    found = 1;
+                }
+                i++;
+            }
+            if(found == 0) {
+                System.out.println("Shape does not exist");
             }
             else {
-                int found = 0;
-                int i = 0;
-                Shape s = null;
-                while(found == 0 && i < this.g.getShapes().size()) {
-                    s = g.getShapes().get(i);
-                    if(s.getName() == target) {
-                        found = 1;
-                    }
-                    i++;
-                }
-                if(found == 0) {
-                    System.out.println("Target does not exist");
+                if(container == "all") {
+                    command = new CommandLink(this.g, s);
                 }
                 else {
-                    command = new CommandMove(s, moveX, moveY);
-                }
-            }
-        }
-        else if(user.contains("delete")) {
-            String[] decomp = user.split("\\(");
-            String[] elements = decomp[1].split(",");
-            String group = elements[0];
-            String target = elements[1].replace("\\)", "");
-            if(group == "all") {
-                command = new CommandDelete(this.g, target);
-            }
-            else {
-                int found = 0;
-                int i = 0;
-                Shape s = null;
-                while(found == 0 && i < this.g.getShapes().size()) {
-                    s = g.getShapes().get(i);
-                    if(s.getName() == target && s instanceof Group) {
-                        found = 1;
+                    found = 0;
+                    i = 0;
+                    Shape group = null;
+                    while(found == 0 && i < this.g.getShapes().size()) {
+                        group = this.g.getShapes().get(i);
+                        if(group.getName() == container && group instanceof Group) {
+                            found = 1;
+                        }
+                        i++;
                     }
-                    i++;
-                }
-                if(found == 0) {
-                    System.out.println("Group does not exist");
-                }
-                else {
-                    command = new CommandDelete((Group)s, target);
+                    if(found == 0) {
+                        System.out.println("Group does not exist");
+                    }
+                    else {
+                        command = new CommandLink((Group)group, s);
+                    }
                 }
             }
         }
-        else if(user.contains("save")) {
-            command = new CommandSave(this.g);
-        }
-        else if(user.contains("load")) {
-
-        }
-        else if(user.contains("show")) {
-            String[] decomp = user.split("\\(");
-            String target = decomp[1].replace("\\)", "");
-            if(target == "all") {
+        else if(commandChoice == "show") {
+            String name = parameters[0].replace("\\)", "");
+            if(name == "all") {
                 command = new CommandShow(this.g);
             }
             else {
                 int found = 0;
                 int i = 0;
                 Shape s = null;
-                while(found == 0 && i < this.g.getShapes().size()) {
-                    s = g.getShapes().get(i);
-                    if(s.getName() == target) {
+                while (found == 0 && i < this.g.getShapes().size()) {
+                    s = this.g.getShapes().get(i);
+                    if (s.getName() == name) {
                         found = 1;
                     }
                     i++;
                 }
-                if(found == 0) {
+                if (found == 0) {
                     System.out.println("Shape or Group does not exist");
-                }
-                else {
+                } else {
                     command = new CommandShow(s);
                 }
             }
         }
-        else if(user.contains("quit")) {
-            command = new CommandQuit();
+        else if(commandChoice == "delete") {
+            String groupName = parameters[0];
+            String shapeName = parameters[1].replace("\\)", "");
+
+            if (groupName == "all") {
+                command = new CommandDelete(this.g, shapeName);
+            }
+            else {
+                int found = 0;
+                int i = 0;
+                Shape group = null;
+                while (found == 0 && i < this.g.getShapes().size()) {
+                    group = this.g.getShapes().get(i);
+                    if (group.getName() == groupName && group instanceof Group) {
+                        found = 1;
+                    }
+                    i++;
+                }
+                if (found == 0) {
+                    System.out.println("Group does not exist");
+                }
+                else {
+                    command = new CommandDelete((Group) group, shapeName);
+                }
+            }
+        }
+        else if(commandChoice == "move") {
+            String shapeName = parameters[0];
+            double moveX = Double.parseDouble(parameters[1]);
+            double moveY = Double.parseDouble(parameters[2].replace("\\)", ""));
+
+            int found = 0;
+            int i = 0;
+            Shape s = null;
+            while(found == 0 && i < this.g.getShapes().size()) {
+                s = this.g.getShapes().get(i);
+                if(s.getName() == shapeName) {
+                    found = 1;
+                }
+                i++;
+            }
+            if(found == 0) {
+                System.out.println("Shape or Group does not exist");
+            }
+            else {
+                command = new CommandMove(s, moveX, moveY);
+            }
+        }
+        else if(commandChoice == "save") {
+            command = new CommandSave(this.g);
+        }
+        else if(commandChoice == "load") {
+            String name = parameters[1].replace("\\)", "");
+            command = new CommandLoad(name, this);
+        }
+        else if(commandChoice == "quit") {
+            command  = new CommandQuit();
         }
         else {
-            System.out.println("Unknown command");
+            System.out.println("Command does not exist");
         }
         return command;
     }
